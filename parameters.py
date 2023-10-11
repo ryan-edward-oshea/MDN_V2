@@ -10,7 +10,7 @@ parser.add_argument("filename",    nargs  ="?",          help="CSV file containi
 parser.add_argument("--model_loc", default="Weights",    help="Location of trained model weights")
 # parser.add_argument("--data_loc",  default="/media/brandon/NASA/Data/Insitu",  help="Location of in situ data")
 # parser.add_argument("--sim_loc",   default="/media/brandon/NASA/Data/Simulated", help="Location of simulated data")
-parser.add_argument("--data_loc",  default="D:/Data/Insitu",    help="Location of in situ data")
+parser.add_argument("--data_loc",  default="/home/ryanoshea/in_situ_database/Working_in_situ_dataset/in_situ_data",    help="Location of in situ data") #in_situ_data #Augmented_Gloria_V2
 parser.add_argument("--sim_loc",   default="D:/Data/Simulated", help="Location of simulated data")
 parser.add_argument("--n_redraws", default=50,     type=int,   help="Number of plot redraws during training (i.e. updates plot every n_iter / n_redraws iterations); only used with --plot_loss.")
 parser.add_argument("--n_rounds",  default=10,     type=int,   help="Number of models to fit, with median output as the final estimate")
@@ -33,10 +33,10 @@ parser.add_argument("--LOO_CV",    action ="store_true", help="Leave-one-out cro
 
 ''' Flags which require model retrain if changed '''
 update = parser.add_argument_group('Model Parameters', 'Parameters which require a new model to be trained if they are changed')
-update.add_argument("--sat_bands", action ="store_true", help="Use bands specific to certain products when utilizing satellite retrieved spectra")
-update.add_argument("--benchmark", action ="store_true", help="Train only on partial dataset, and use remaining to benchmark")
-update.add_argument("--product",   default="chl",        help="Product to estimate")
-update.add_argument("--sensor",    default="OLI",        help="Sensor to estimate from (See meta.py for available options)")
+update.add_argument("--sat_bands", default=True, action ="store_true", help="Use bands specific to certain products when utilizing satellite retrieved spectra")
+update.add_argument("--benchmark", default=False, action ="store_true", help="Train only on partial dataset, and use remaining to benchmark")
+update.add_argument("--product",   default="chl,tss,cdom,pc",        help="Product to estimate")
+update.add_argument("--sensor",    default="S3B",        help="Sensor to estimate from (See meta.py for available options)")
 update.add_argument("--align",     default=None,         help="Comma-separated list of sensors to align data with; passing \"all\" uses all sensors (See meta.py for available options)")
 update.add_argument("--model_lbl", default="",      	 help="Label for a model")
 update.add_argument("--seed",      default=42, type=int, help="Random seed")
@@ -94,12 +94,12 @@ parser.set_defaults(dataset='all', use_sim=False)
 
 
 
-def get_args(kwargs={}, use_cmdline=True, **kwargs2):
+def get_args(kwargs={}, use_cmdline=False, **kwargs2):
 	kwargs2.update(kwargs)
 
 	if use_cmdline:	args = parser.parse_args()
 	else:           args = parser.parse_args([])
-	
+
 	for k, v in kwargs2.items():
 		setattr(args, k, v)
 	return args

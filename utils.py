@@ -644,7 +644,7 @@ def get_data(args):
 		get_dataset = lambda path, p: Path(path.as_posix().replace(f'/{sensor}','').replace(f'/{p}.csv','')).stem
 
 		for product in products:
-			if product in ['chl', 'tss', 'cdom']:
+			if product in ['chl', 'tss', 'cdom','pc']:
 				product = f'../{product}'
 		
 			# Find all datasets with the given product available
