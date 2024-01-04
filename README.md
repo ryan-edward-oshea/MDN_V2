@@ -31,6 +31,7 @@ import numpy as np
 sensor = "S3A"
 
 # Tile should be the output of an atmospheric correction program e.g. SeaDAS
+#sat_bands will need to be changed to False for chl or chl,tss,cdom models. 
 kwargs={'product'  :'chl,tss,cdom,pc',
         'benchmark': False,
         'sat_bands': True}
