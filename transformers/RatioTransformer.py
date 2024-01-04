@@ -28,7 +28,7 @@ class RatioTransformer(_CustomTransformer):
 
 	def _transform(self, X, *args, **kwargs):		 
 		''' Ratios based on literature '''
-		from ..Benchmarks.utils import get_required, has_band, closest_wavelength
+		from ..benchmarks.utils import get_required, has_band, closest_wavelength
 		self.labels = []
 
 		x     = np.atleast_2d(X)
